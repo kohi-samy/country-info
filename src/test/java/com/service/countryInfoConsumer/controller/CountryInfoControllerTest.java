@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.service.countryInfoConsumer.dto.CountryInfoDTO;
 import com.service.countryInfoConsumer.service.CountryInfoService;
 import com.service.countryInfoConsumer.util.Constants;
+import jakarta.servlet.ServletException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -46,16 +47,17 @@ class CountryInfoControllerTest {
 
     }
 
-//    @Test
-//    void testGetCountryInfoByName_Throw_Exception() throws Exception {
-//
-//        when(countryInfoService.getCountryInfo(eq("Finland"),eq(Constants.FIELDS))).thenThrow(JsonProcessingException.class);
-//
-//        assertThrows(RuntimeException.class, () -> {
-//            mockMvc.perform(MockMvcRequestBuilders.get("/country/info/Finland"));
-//        });
-//
-//    }
+    @Test
+    void testGetCountryInfoByName_Throw_Exception() throws Exception {
+
+        when(countryInfoService.getCountryInfo(anyString(),anyString())).thenThrow(JsonProcessingException.class);
+
+        assertThrows(ServletException.class, () -> {
+            mockMvc.perform(MockMvcRequestBuilders.get("/country/info/Finland")
+                    .contentType(MediaType.APPLICATION_JSON));
+        });
+
+    }
 
     @Test
     void errorEndpoint() throws Exception {
