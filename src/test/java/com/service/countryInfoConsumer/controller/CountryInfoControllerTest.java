@@ -52,19 +52,10 @@ class CountryInfoControllerTest {
 
         when(countryInfoService.getCountryInfo(anyString(),anyString())).thenThrow(JsonProcessingException.class);
 
-        assertThrows(ServletException.class, () -> {
-            mockMvc.perform(MockMvcRequestBuilders.get("/country/info/Finland")
-                    .contentType(MediaType.APPLICATION_JSON));
-        });
-
-    }
-
-    @Test
-    void errorEndpoint() throws Exception {
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/error")
+        mockMvc.perform(MockMvcRequestBuilders.get("/country/info/Finland")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError());
+                    .andExpect(MockMvcResultMatchers.status().isInternalServerError());;
+
     }
 
     private CountryInfoDTO getCountryInfoDTO(){
